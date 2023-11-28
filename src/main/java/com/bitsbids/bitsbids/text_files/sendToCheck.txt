@@ -1,0 +1,115 @@
+The entity:
+package com.bitsbids.bitsbids.entity;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.sql.Timestamp;
+import java.util.List;
+import java.util.UUID;
+
+import org.hibernate.annotations.GenericGenerator;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Builder
+@Table(name = "products")
+public class ProductEntity {
+    @Id
+    @GeneratedValue(generator="UUID")
+    @GenericGenerator(name = "UUID",strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(name = "product_id", columnDefinition = "uuid")
+    private UUID productId;
+
+    @ManyToOne
+    @JoinColumn(name = "seller_id")
+    private UserEntity seller;
+
+    @Column(name = "bid_start_time")
+    private Timestamp bidStartTime;
+ 
+    @Column(name = "bid_end_time")
+    private Timestamp bidEndTime;
+
+    @Column(name = "title")
+    private String title;
+
+    @Column(name = "condition")
+    private String condition;
+
+    @Column(name = "category")
+    private String category;
+
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "product_image_url")
+    private List<String> productImageUrl;
+
+    @Column(name = "base_price")
+    private int basePrice;
+
+    @Column(name = "time_created")
+    private Timestamp timeCreated;
+
+    @PrePersist
+    public void prePersist() {
+    this.timeCreated = new Timestamp(System.currentTimeMillis());
+    }
+
+    // @Column(name = "total_bids")
+    // private int totalBids;
+
+    // @Column(name = "visit_count")
+    // private int visitCount;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "transaction_id")
+    private TransactionEntity transaction;
+
+    @ManyToOne // should this have  cascade?
+    @JoinColumn(name = "highest_bid_id")
+    private BidEntity highestBid;
+
+
+    // Getters and setters
+}
+
+the repo:
+package com.bitsbids.bitsbids.repository;
+
+import java.util.List;
+import java.util.UUID;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+import com.bitsbids.bitsbids.entity.ProductEntity;
+
+// the repository is a specialised version of @Component,used to indicate that it fullfils the role of a repo
+@Repository
+public interface ProductRepository extends JpaRepository<ProductEntity,UUID>{
+    // the second argument to the JpaRepository is the primary key of the entity
+    // List<ProductEntity> findAllByCondition(String condition);
+    // List<ProductEntity> findAllByTitle(String title);
+    // List<ProductEntity> findAllByCategory(String category);
+    
+    //Only returns ones where the transaction id is null
+    @Query("SELECT p FROM ProductEntity p WHERE " +
+    "(:title is null or LOWER(p.title) LIKE CONCAT('%', LOWER(:title), '%')) AND " +
+    "(:category is null or LOWER(p.category) LIKE CONCAT('%', LOWER(:category), '%')) AND " +
+    "(:condition is null or LOWER(p.condition) LIKE CONCAT('%', LOWER(:condition), '%')) AND " +
+    "p.transactionId IS NULL")
+    List<ProductEntity> findByTitleAndCategoryAndCondition(
+            @Param("title") String title,
+            @Param("category") String category,
+            @Param("condition") String condition);
+  
+}
+// does the queries

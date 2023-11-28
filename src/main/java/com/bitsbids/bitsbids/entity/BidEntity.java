@@ -1,0 +1,43 @@
+package com.bitsbids.bitsbids.entity;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.sql.Timestamp;
+import java.util.UUID;
+
+import org.hibernate.annotations.GenericGenerator;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Builder
+@Table(name = "bids")
+public class BidEntity {
+    @Id
+    @GeneratedValue(generator="UUID")
+    @GenericGenerator(name = "UUID",strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(name = "bid_id", columnDefinition = "uuid")
+    private UUID bidId;
+
+    @Column(name = "bid_amount")
+    private int bidAmount;
+
+    @ManyToOne
+    @JoinColumn(name = "bidder")
+    private UserEntity bidder;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private ProductEntity productId;
+
+    @Column(name = "time_bid_made")
+    private Timestamp timeBidMade;
+
+    // Getters and setters
+}
+

@@ -1,0 +1,27 @@
+{
+    "username": "Rohan Mathew",
+    "email":"userless@gmail.com",
+}
+{
+    "userId": "8f4b83cf-bd76-46fa-80a6-35c79bed2160",
+    "username": "Rohan Mathew",
+    "email": "userless@gmail.com",
+    "address": null,
+    "profileImageUrl": null,
+    "walletId": {
+        "walletId": "28c5e4aa-014a-4235-b46d-c574cfedd394",
+        "balance": 0,
+        "currentBidTotal": 0
+    },
+    "timeCreated": "2023-11-28T06:36:18.933+00:00"
+}
+
+{
+    "seller":"8f4b83cf-bd76-46fa-80a6-35c79bed2160",
+    "bidStartTime":"2023-11-28T08:36:18.933+00:00",
+    "bidEndTime":"2023-11-28T09:36:18.933+00:00",
+    "title":"Cricket Gloves",
+    "condition":"barely used",
+    "description":"SG cricket gloves size 10, with red leather stitching",
+    "basePrice":1600
+}
