@@ -32,8 +32,8 @@ public class BidEntity {
     private UserEntity bidder;
 
     @ManyToOne
-    @JoinColumn(name = "product_id")
-    private ProductEntity productId;
+    @JoinColumn(name = "product")
+    private ProductEntity product;
 
     @Column(name = "time_bid_made")
     private Timestamp timeBidMade;

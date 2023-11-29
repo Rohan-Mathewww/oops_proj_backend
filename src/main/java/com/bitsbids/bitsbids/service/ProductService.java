@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bitsbids.bitsbids.entity.ProductEntity;
+import com.bitsbids.bitsbids.entity.UserEntity;
 import com.bitsbids.bitsbids.repository.ProductRepository;
 
 @Service
@@ -20,34 +21,34 @@ public class ProductService{
     public ProductEntity createProduct(ProductEntity product) {
         return productRepository.save(product);
     }
-    // public List<ProductEntity> saveProducts(List<ProductEntity> products) {
-    //     return productRepository.saveAll(products);
-    // }
-    // public List<ProductEntity> findProductsById(List<UUID> product_ids) {
-    //     return productRepository.findAllById(product_ids);
-    // }
-    // public List<ProductEntity> findProductsByCondition(String condition) {
-    //     return productRepository.findAllByCondition(condition);
-    // }
-    // public List<ProductEntity> findProductsByCategory(String condition) {
-    //     return productRepository.findAllByCategory(condition);
-    // }
-    //  public List<ProductEntity> findProductsByTitle(String title) {
-    //     return productRepository.findAllByTitle(title);
-    // }
+    
+    public List<ProductEntity> findProductsSoldByUserId(UserEntity user) {
+        return productRepository.findAllBySellerAndProductSoldIsTrue(user);
+    }
+    public List<ProductEntity> findProductsSellingByUserId(UserEntity user) {
+        return productRepository.findAllBySellerAndProductSoldIsTrue(user);
+    }
+    public List<ProductEntity> findProductsOrderedByUserId(UserEntity user) {
+        return productRepository.findAllByHighestBidBidderUserIdAndProductSoldIsTrue(user);
+    }
+     public List<ProductEntity> findProductsBidByUserId(UserEntity user) {
+        return productRepository.findAllByBidsBidderUserIdAndProductSoldIsFalse(user);
+    }
+  
     public List<ProductEntity> findProductsBySearch(String searchString, String category, String condition) {
         return productRepository.findByTitleAndCategoryAndCondition(searchString, category, condition);
         // has to be of the form title, category, condition
+        // findByTitleAndCategoryAndCondition(null,null,null) if you want find all
     }
-    public List<ProductEntity> findProducts(){
-        //return StreamSupport.stream(productRepository.findAll().spliterator(),false).collect(Collectors.toList());
-        return productRepository.findAll();
-    }
-    public Optional<ProductEntity> findProductById(UUID uuid){
-        return productRepository.findById(uuid);
+    public Optional<ProductEntity> findProductById(UUID productId){
+        return productRepository.findById(productId);
     }
     public void deleteProduct(UUID productId){
-        productRepository.deleteById(productId);
+        productRepository.deleteById(productId); //deletes products after bid time expires and noone bids
     }
+     // public List<ProductEntity> findProducts(){
+    //     //return StreamSupport.stream(productRepository.findAll().spliterator(),false).collect(Collectors.toList());
+    //     return productRepository.findAll();
+    // }
 
 }

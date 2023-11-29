@@ -19,6 +19,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Builder
 @Table(name = "products")
 public class ProductEntity {
+
     @Id
     @GeneratedValue(generator="UUID")
     @GenericGenerator(name = "UUID",strategy = "org.hibernate.id.UUIDGenerator")
@@ -56,16 +57,8 @@ public class ProductEntity {
     @Column(name = "time_created")
     private Timestamp timeCreated;
 
-    @PrePersist
-    public void prePersist() {
-    this.timeCreated = new Timestamp(System.currentTimeMillis());
-    }
-
-    // @Column(name = "total_bids")
-    // private int totalBids;
-
-    // @Column(name = "visit_count")
-    // private int visitCount;
+    @Column(name = "product_sold")
+    private boolean productSold;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "transaction_id")
@@ -74,6 +67,12 @@ public class ProductEntity {
     @ManyToOne // should this have  cascade?
     @JoinColumn(name = "highest_bid_id")
     private BidEntity highestBid;
+
+    @PrePersist
+    public void prePersist() {
+    this.timeCreated = new Timestamp(System.currentTimeMillis());
+    this.productSold = false;
+    }
 
 
     // Getters and setters
