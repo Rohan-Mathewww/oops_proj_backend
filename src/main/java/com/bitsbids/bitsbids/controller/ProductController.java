@@ -1,5 +1,6 @@
 package com.bitsbids.bitsbids.controller;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bitsbids.bitsbids.entity.ProductEntity;
+//import com.bitsbids.bitsbids.mappers.impl.ProductMapper;
 import com.bitsbids.bitsbids.service.ProductService;
 
 @RestController
@@ -25,7 +27,7 @@ import com.bitsbids.bitsbids.service.ProductService;
 public class ProductController {
     @Autowired
     private ProductService productService;
-    
+   
     // @GetMapping
     // public ResponseEntity<?> getProducts(){
     //     List<ProductEntity> products = productService.findProducts();
@@ -55,6 +57,11 @@ public class ProductController {
     @PostMapping //works
     public ResponseEntity<?> createProduct(@RequestBody ProductEntity productEntity) // find what ResponseEntity does
     {
+        // String productImageUrlAsString = productDto.getProductImageUrl();
+        // List<String> productImageUrls = Arrays.asList(productImageUrlAsString.split(",")); //MAY GIVE AN ERROR IM ASSUMING JSONIGNORE DOES SOMETHING
+        
+        // ProductEntity productEntity = productMapper.mapFrom(productDto);
+        // productEntity.setProductImageUrl(productImageUrls);
         return new ResponseEntity<>(productService.createProduct(productEntity),HttpStatus.CREATED);// created used to indicate successful creation
     }
 

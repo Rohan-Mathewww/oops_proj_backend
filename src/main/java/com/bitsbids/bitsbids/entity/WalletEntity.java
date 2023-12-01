@@ -11,11 +11,14 @@ import java.util.UUID;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Entity
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Table(name = "wallet")
 public class WalletEntity {
     @Id
