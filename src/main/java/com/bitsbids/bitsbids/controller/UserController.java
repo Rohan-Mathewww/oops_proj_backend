@@ -59,7 +59,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/sold/{userId}") 
+    @GetMapping("/{userId}/sold") 
     public ResponseEntity<?> getProductsSoldByUser(@PathVariable("userId") UUID userId){
         Optional<UserEntity> existingUserEntity = userService.findUserById(userId);
         if (existingUserEntity.isPresent()){
@@ -69,7 +69,7 @@ public class UserController {
             return new ResponseEntity<>("User Id does not exist",HttpStatus.NOT_FOUND);
         }
     }
-    @GetMapping("/orders/{userId}")
+    @GetMapping("/{userId}/orders")
     public ResponseEntity<?> getProductsOrderedByUser(@PathVariable("userId") UUID userId){
         Optional<UserEntity> existingUserEntity = userService.findUserById(userId);
         if (existingUserEntity.isPresent()){
@@ -79,7 +79,7 @@ public class UserController {
             return new ResponseEntity<>("User Id does not exist",HttpStatus.NOT_FOUND);
         }
     }
-    @GetMapping("/selling/{userId}")
+    @GetMapping("/{userId}/selling")
     public ResponseEntity<?> getProductsBeingSoldByUser(@PathVariable("userId") UUID userId){
         Optional<UserEntity> existingUserEntity = userService.findUserById(userId);
         if (existingUserEntity.isPresent()){
@@ -89,7 +89,7 @@ public class UserController {
             return new ResponseEntity<>("User Id does not exist",HttpStatus.NOT_FOUND);
         }
     }
-    @GetMapping("/bids/{userId}")
+    @GetMapping("/{userId}/bids")
     public ResponseEntity<?> getProductsBidByUser(@PathVariable("userId") UUID userId){
         Optional<UserEntity> existingUserEntity = userService.findUserById(userId);
         if (existingUserEntity.isPresent()){
