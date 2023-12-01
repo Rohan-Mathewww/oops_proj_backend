@@ -11,11 +11,14 @@ import java.util.UUID;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Builder
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Table(name = "chat_messages")
 public class ChatMessageEntity {
     @Id

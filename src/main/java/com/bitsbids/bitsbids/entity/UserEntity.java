@@ -3,6 +3,9 @@ package com.bitsbids.bitsbids.entity;
 
 import java.util.UUID;
 import org.hibernate.annotations.GenericGenerator;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.sql.Timestamp;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -16,6 +19,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Entity
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Table(name = "Users")
 public class UserEntity {
 
@@ -33,8 +37,11 @@ public class UserEntity {
     @Column(name = "address")
     private String address;
 
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
     @Column(name = "profile_image_url", columnDefinition = "text")
-    private String profileImageUrl;
+    private String profileImageUrl; 
 
     //@JsonIdentityReference(alwaysAsId = true)
     //the wallet entity can have this to just send the id instead of the whole object.
