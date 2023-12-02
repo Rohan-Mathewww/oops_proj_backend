@@ -1,5 +1,6 @@
 package com.bitsbids.bitsbids.repository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,5 +11,5 @@ import com.bitsbids.bitsbids.entity.UserEntity;
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity,UUID>{
     // the second argument to the JpaRepository is the primary key of the entity
-    
+    Optional<UserEntity> findUserByEmail(String email);
 }

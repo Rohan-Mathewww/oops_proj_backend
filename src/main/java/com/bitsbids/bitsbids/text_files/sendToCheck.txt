@@ -113,3 +113,10 @@ public interface ProductRepository extends JpaRepository<ProductEntity,UUID>{
   
 }
 // does the queries
+
+
+the product json:
+{productId: '39a9e800-8d90-49b8-a1a6-be24ccd2d45b', seller: null, bidStartTime: '2023-12-03T05:56:06.657+00:00', bidEndTime: '2023-12-05T05:56:06.657+00:00', title: 'yea baby', …}
+
+
+{https://res.cloudinary.com/dpeibyaj6/image/upload/v1701478553/oops_project/Screenshot_2023-10-16_at_10.59.34_PM_jikvjy.png,https://res.cloudinary.com/dpeibyaj6/image/upload/v1701478555/oops_project/Screenshot_2023-11-09_at_1.46.45_AM_unm2rm.png,https://res.cloudinary.com/dpeibyaj6/image/upload/v1701478556/oops_project/Screenshot_2023-12-01_at_12.43.52_PM_knsovu.png}
