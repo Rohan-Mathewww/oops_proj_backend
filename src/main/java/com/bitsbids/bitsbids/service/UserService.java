@@ -20,20 +20,36 @@ public class UserService{
     private UserRepository userRepository;
     @Autowired
     private WalletRepository walletRepository;
+ 
 
 
-    // public UserServiceImpl(UserRepository userRepository){
-    //     this.userRepository = userRepository;
+    // public UserEntity createUser(UserEntity userEntity){
+    //     WalletEntity walletEntity = DataEntryUtil.createWalletEntity(); 
+    //     // should wallet id be initialized at all or initialized to null
+    //     userEntity.setWalletId(walletRepository.save(walletEntity));
+    //     return userRepository.save(userEntity);
     // }
     public UserEntity createUser(UserEntity userEntity){
-        WalletEntity walletEntity = DataEntryUtil.createWalletEntity(); 
-        // should wallet id be initialized at all or initialized to null
-        userEntity.setWalletId(walletRepository.save(walletEntity));
-        return userRepository.save(userEntity);
+        Optional<UserEntity> existingUserEntity = userRepository.findUserByEmail(userEntity.getEmail());
+        if (existingUserEntity.isPresent()){
+            return existingUserEntity.get();
+        }
+        else{
+            WalletEntity walletEntity = DataEntryUtil.createWalletEntity(); 
+            // should wallet id be initialized at all or initialized to null
+            userEntity.setWalletId(walletRepository.save(walletEntity));
+            return userRepository.save(userEntity);
+        }
     }
-    public UserEntity updateUser(UUID userId, UserEntity userEntity){
-        userEntity.setUserId(userId);
-        return userRepository.save(userEntity);
+    
+     public UserEntity updateUser(UserEntity newUserEntity, UserEntity oldUserEntity){
+        if (newUserEntity.getAddress() != null){
+            oldUserEntity.setAddress(newUserEntity.getAddress());
+        }
+         if (newUserEntity.getPhoneNumber() != null){
+            oldUserEntity.setPhoneNumber(newUserEntity.getPhoneNumber());
+        }
+        return userRepository.save(oldUserEntity); // but its updated now
     }
     public Optional<UserEntity> findUserById(UUID uuid){
         return userRepository.findById(uuid);

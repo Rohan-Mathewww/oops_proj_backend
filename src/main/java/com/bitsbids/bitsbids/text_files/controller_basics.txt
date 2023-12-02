@@ -25,3 +25,9 @@
     "description":"SG cricket gloves size 10, with red leather stitching",
     "basePrice":1600
 }
+
+{
+    "username":"ROHAN SABU",
+    "email":"f20220211@hyderabad.bits-pilani.ac.in",
+    "profileImageUrl":"https://lh3.googleusercontent.com/a/ACg8ocJik6pzRKlazK7Lz2pMsr47POlZ9wNPAEKOxnyi3avH=s96-c"
+} // works

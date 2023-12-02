@@ -8,9 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,12 +34,12 @@ public class UserController {
         return new ResponseEntity<>(userService.createUser(userEntity),HttpStatus.CREATED);// created used to indicate successful creation
     }
 
-    @PutMapping("/{userId}")
+    @PatchMapping("/{userId}")
     public ResponseEntity<?> updateUser(@PathVariable("userId") UUID userId, @RequestBody UserEntity userEntity) {   
         Optional<UserEntity> existingUserEntity = userService.findUserById(userId);
         if (existingUserEntity.isPresent()){
             UserEntity retrievedUserEntity = existingUserEntity.get();
-            return new ResponseEntity<>(userService.updateUser(userId,retrievedUserEntity),HttpStatus.OK); // OK used to indicate successful update
+            return new ResponseEntity<>(userService.updateUser(userEntity,retrievedUserEntity),HttpStatus.OK); // OK used to indicate successful update
             //return new ResponseEntity<>(retrievedUserEntity,HttpStatus.OK);
         }
         else{
